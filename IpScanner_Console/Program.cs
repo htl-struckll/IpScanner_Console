@@ -18,14 +18,15 @@ namespace IpScanner_Console
             _countdown = new CountdownEvent(1);
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            string ipBase = "192.168.8."; //todo Change for wpf application (custom user input)
+            //string ipBase = "192.168.195."; //todo Change for wpf application (custom user input)
+            string ipBase = "";
             for (int i = 1; i < 255; i++)
             {
                 string ip = ipBase + i;
                 Ping p = new Ping();
                 p.PingCompleted += PingCompleted;
                 _countdown.AddCount();
-                p.SendAsync(ip, 500, ip);
+                p.SendAsync(ip, 100000, ip);
             }
             _countdown.Signal();
             _countdown.Wait();
@@ -53,7 +54,6 @@ namespace IpScanner_Console
                 catch (SocketException ex)
                 {
                     name = "?";
-                    Console.Write(ex.Message);                   
                 }
 
                 Console.WriteLine("{0} ({1}) is up: ({2} ms)", ip, name, e.Reply.RoundtripTime);
